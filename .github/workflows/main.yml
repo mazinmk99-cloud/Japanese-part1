@@ -10,7 +10,7 @@ jobs:
         with:
           python-version: '3.9'
       - run: pip install flet
-      - run: flet build apk --project main.py --product-name "Mazin's own" --icon jolly_roger.png
+      - run: - run: flet build apk --project main.py --product-name "Mazin's own"
       - uses: actions/upload-artifact@v4
         with:
           name: app-apk
