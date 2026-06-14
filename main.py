@@ -26,6 +26,7 @@ def main(page: ft.Page):
             ft.Text("mazin's Learning Quest", size=30, weight="bold", color=COLOR_LUFFY_RED, text_align="center"),
             ft.ElevatedButton("Hiragana Study", bgcolor=COLOR_STRAW_YELLOW, icon="menu_book"),
             ft.ElevatedButton("Vocabulary Study", bgcolor=COLOR_STRAW_YELLOW, icon="abc"),
+            
         ],
         alignment=ft.MainAxisAlignment.CENTER
     )
