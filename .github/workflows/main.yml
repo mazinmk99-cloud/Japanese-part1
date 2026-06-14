@@ -1,0 +1,15 @@
+name: Build Flet App
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with: {python-version: '3.9'}
+      - run: pip install flet
+      - run: flet build apk --project main.py
+      - uses: actions/upload-artifact@v3
+        with:
+          name: app-apk
+          path: build/apk/app-release.apk
