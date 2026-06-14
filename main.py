@@ -6,7 +6,7 @@ hiragana_dict = {'あ': 'അ (a)', 'い': 'ഇ (i)', 'う': 'ഉ (u)'} # ... ബ
 n5_vocab = {'あいさつ': ['അഭിവാദ്യം (Greeting)', 'Aisatsu']} # ... ബാക്കി ഡാറ്റ ഇവിടെ ചേർക്കുക ...
 
 def main(page: ft.Page):
-    page.title = "Straw Hat Japanese"
+    page.title = "mazin's ownk"
     page.theme_mode = ft.ThemeMode.LIGHT
     page.padding = 0
 
