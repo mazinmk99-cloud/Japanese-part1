@@ -13,13 +13,17 @@ def main(page: ft.Page):
     # ലൂഫി തീം നിറങ്ങൾ
     COLOR_LUFFY_RED = "#D32F2F"
     COLOR_STRAW_YELLOW = "#E0A82F"
+        def button_clicked(e):
+        print("Button works!")
+        # അടുത്ത പേജിലേക്കോ പാഠത്തിലേക്കോ പോകാനുള്ള കോഡ് ഇവിടെയാണ് വരേണ്ടത് 
+
 
     # മെയിൻ കണ്ടന്റ്
     main_column = ft.Column(
         scroll=ft.ScrollMode.AUTO,
         controls=[
             ft.Container(height=50),
-            ft.Text("Luffy's Learning Quest", size=30, weight="bold", color=COLOR_LUFFY_RED, text_align="center"),
+            ft.Text("mazin's Learning Quest", size=30, weight="bold", color=COLOR_LUFFY_RED, text_align="center"),
             ft.ElevatedButton("Hiragana Study", bgcolor=COLOR_STRAW_YELLOW, icon="menu_book"),
             ft.ElevatedButton("Vocabulary Study", bgcolor=COLOR_STRAW_YELLOW, icon="abc"),
         ],
