@@ -1,3 +1,4 @@
+
 import flet as ft
 import random
 
@@ -134,7 +135,6 @@ vocab_data = {
     'あにめ': ['ആനിമേഷൻ/ആниമേ (Anime)', 'Anime'],
     'げーむ': ['ഗെയിം (Game)', 'Geemu'],
     'てにす': ['ടെന്നീസ് (Tennis)', 'Tenisu']
-    # ... ബാക്കി വാക്കുകൾ ഇതിൽ തന്നെ ഉണ്ടാകും ...
 }
 
 # --- Hiragana Letters ---
@@ -155,11 +155,14 @@ hiragana_groups = {
 
 def main(page: ft.Page):
     page.title = "Mazin's Learning Quest"
-    page.theme_mode = ft.ThemeMode.LIGHT
+    page.bgcolor = ft.colors.WHITE 
     
-    # BGM Setup (Persistent in overlay)
-    bgm = ft.Audio(src="bgm.mp3", autoplay=True, loop=True)
+    # BGM Setup
+    bgm = ft.Audio(src="bgm.mp3", autoplay=False, loop=True)
     page.overlay.append(bgm)
+    
+    def play_music(e):
+        bgm.play()
 
     # Routing
     def route_change(route):
@@ -169,6 +172,7 @@ def main(page: ft.Page):
         if page.route == "/":
             page.views.append(ft.View("/", [
                 ft.AppBar(title=ft.Text("Mazin's Quest"), bgcolor=ft.colors.RED_700, color="white"),
+                ft.ElevatedButton("🎶 Start Music", on_click=play_music),
                 ft.ElevatedButton("📚 Vocabulary", on_click=lambda _: page.go("/vocab")),
                 ft.ElevatedButton("📝 Hiragana Letters", on_click=lambda _: page.go("/letters"))
             ]))
@@ -213,4 +217,5 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.go("/")
 
-ft.app(target=main)
+# ആപ്പ് റൺ ചെയ്യുമ്പോൾ assets_dir നിർബന്ധമാണ്
+ft.app(target=main, assets_dir="assets")
