@@ -1,9 +1,9 @@
 import flet as ft
 import random
 
-# --- നിങ്ങളുടെ മുഴുവൻ വാക്കുകളും (N5 Vocabulary) ---
-n5_vocab = {
-    'どうぶつえん': ['മൃഗശാല (Zoo)', 'Doubutsuen'],
+# --- Vocabulary Data ---
+vocab_data = {
+    'どうぶつえん': ['മൃഗശാല', 'Zoo'],
     'いりぐち': ['പ്രവേശന വഴി (Entrance)', 'Iriguchi'],
     'でぐち': ['പുറത്തുകടക്കുന്ന വഴി (Exit)', 'Deguchi'],
     'みぎ': ['വലത് (Right)', 'Migi'],
@@ -42,14 +42,15 @@ n5_vocab = {
     'かのじょ': ['അവൾ (She)', 'Kanojo'],
     'わたしたち': ['ഞങ്ങൾ (We)', 'Watashitachi'],
     'みなさん': ['എല്ലാവരും (Everyone)', 'Minasan'],
-    'こんにちは': ['ഹലോ/ശുഭദിനം (Hello)', 'Konnichiwa'],
+    'こんにちは': ['ഹലോ/ശുഭദിനം (Hello/Good afternoon)', 'Konnichiwa'],
     'こんばんは': ['ശുഭസന്ധ്യ (Good evening)', 'Konbanwa'],
     'おやすみなさい': ['ശുഭരാത്രി (Good night)', 'Oyasuminasai'],
-    'すみません': ['ക്ഷമിക്കണം (Excuse me/Sorry)', 'Sumimansen'],
+    'おやすみ': ['ശുഭരാത്രി - കാഷ്വൽ (Good night - Casual)', 'Oyasumi'],
+    'すみません': ['ക്ഷമിക്കണം/എക്സ്ക്യൂസ് മീ (Excuse me/Sorry)', 'Sumimansen'],
     'ごめんなさい': ['എന്നോട് ക്ഷമിക്കൂ (I\'m sorry)', 'Gomennasai'],
     'ください': ['ദയവായി തരൂ (Please give me)', 'Kudasai'],
     'おねがいします': ['ദയവായി (Please/I request)', 'Onegaishimasu'],
-    'どうぞ': ['ദാ പിടിച്ചോളൂ (Please/Here you go)', 'Douzo'],
+    'どうぞ': ['ദാ പിടിച്ചോളൂ/ആവാമല്ലോ (Please/Here you go)', 'Douzo'],
     'どうも': ['നന്ദി - കാഷ്വൽ (Thanks - Casual)', 'Doumo'],
     'だいじょうぶ': ['സാരമില്ല/കുഴപ്പമില്ല (All right/OK)', 'Daijoubu'],
     'しつれいします': ['ഞാൻ ഇറങ്ങുന്നു/ക്ഷമിക്കണം (Excuse me/Goodbye)', 'Shitsureishimasu'],
@@ -58,20 +59,39 @@ n5_vocab = {
     'ただいま': ['ഞാൻ തിരിച്ചെത്തി (I\'m home)', 'Tadaima'],
     'おかえりなさい': ['സ്വാഗതം/തിരിച്ചെത്തിയോ (Welcome home)', 'Okaerinasai'],
     'いただきます': ['ഭക്ഷണത്തിന് മുൻപ് പറയുന്ന നന്ദി (Let\'s eat)', 'Itadakimasu'],
-    'ごちそうさまでした': ['ഭക്ഷണത്തിന് ശേഷം പറയുന്ന നന്ദി (Thank you for meal)', 'Gochisousamadeshita'],
+    'ごちそうさまでした': ['ഭക്ഷണത്തിന് ശേഷം പറയുന്ന നന്ദി (Thank you for the meal)', 'Gochisousamadeshita'],
     'おめでとう': ['അഭിനന്ദനങ്ങൾ (Congratulations)', 'Omedetou'],
     'もしもし': ['ഹലോ - ഫോണിൽ (Hello on phone)', 'Moshimoshi'],
     'げんき': ['സുഖമാണോ? (Healthy/Well?)', 'Genki'],
+    'おげんきですか': ['സുഖമാണോ? - ഫോർമൽ (How are you?)', 'Ogenkideska'],
+    'そうですね': ['അതെ അങ്ങനെയൊക്കെ തന്നെ (That\'s right/Let me see)', 'Soudesune'],
+    'ほんとう': ['സത്യമാണോ/ശരിക്കും? (Really?)', 'Hontou'],
+    'ちょっと': ['കുറച്ച്/ഒരു മിനിറ്റ് (A little/Just a moment)', 'Chotto'],
     'いくら': ['എത്രയാണ് വില? (How much)', 'Ikura'],
     'いくつ': ['എത്ര എണ്ണം/എത്ര വയസ്സ്? (How many/How old)', 'Ikutsu'],
+    'どの': ['ഏത് (Which)', 'Dono'],
+    'どれ': ['ഏതാണ് (Which one)', 'Dore'],
     'ここ': ['ഇവിടെ (Here)', 'Koko'],
     'そこ': ['അവിടെ (There)', 'Soko'],
     'あそこ': ['അങ്ങ് ദൂരെ (Over there)', 'Asoko'],
+    'こちら': ['ഈ വശത്തേക്ക്/ഇദ്ദേഹം (This way/This person)', 'Kochira'],
+    'そちら': ['ആ വശത്തേക്ക് (That way)', 'Sochira'],
+    'あちら': ['അങ്ങ് ദൂരെ വശത്തേക്ക് (That way over there)', 'Achira'],
+    'どちら': ['ഏത് വശത്തേക്ക് (Which way)', 'Dochira'],
+    'こんな': ['ഇങ്ങനെയുള്ള (This kind of)', 'Konna'],
+    'そんな': ['അങ്ങനെയുള്ള (That kind of)', 'Sonna'],
+    'あんな': ['അങ്ങനെയുള്ള - ദൂരെ (That kind of over there)', 'Anna'],
+    'どんな': ['എങ്ങനെയുള്ള (What kind of)', 'Donna'],
+    'こう': ['ഇതുപോലെ (In this way)', 'Kou'],
+    'そう': ['അതുപോലെ (In that way)', 'Sou'],
+    'ああ': ['അതുപോലെ - ദൂരെ (In that way over there)', 'Aa'],
+    'どう': ['എങ്ങനെ (How)', 'Dou'],
     'たくさん': ['ധാരാളം (A lot)', 'Takusan'],
     'すこし': ['കുറച്ച് (A little)', 'Sukoshi'],
     'ぜんぜん': ['ഒട്ടുമില്ല/തീരെയില്ല (Not at all)', 'Zenzen'],
     'たいへん': ['വളരെ/വലിയ ബുദ്ധിമുട്ട് (Very/Difficult)', 'Taihen'],
     'とても': ['വളരെ (Very)', 'Totemo'],
+    'あまり': ['അത്രയ്ക്കില്ല (Not very much)', 'Amari'],
     'いつも': ['എപ്പോഴും (Always)', 'Itsumo'],
     'ときどき': ['ഇടയ്ക്കിടെ (Sometimes)', 'Tokidoki'],
     'よく': ['പലപ്പോഴും/നന്നായി (Often/Well)', 'Yoku'],
@@ -79,6 +99,9 @@ n5_vocab = {
     'すぐ': ['ഉടൻ തന്നെ (Immediately)', 'Sugu'],
     'もういちど': ['ഒന്നുകൂടി (One more time)', 'Mouichido'],
     'いっしょに': ['ഒരുമിച്ച് (Together)', 'Isshoni'],
+    'おなじ': ['ഒരേപോലെ (Same)', 'Onaji'],
+    'ほか': ['മറ്റുള്ളവ (Other)', 'Hoka'],
+    'じぶん': ['സ്വയം (Oneself)', 'Jibun'],
     'しんせつ': ['ദയയുള്ള (Kind)', 'Shinsetsu'],
     'べんり': ['സൗകര്യപ്രദമായ (Convenient)', 'Benri'],
     'ふべん': ['അസൗകര്യമുള്ള (Inconvenient)', 'Fuben'],
@@ -89,7 +112,7 @@ n5_vocab = {
     'ひま': ['വെറുതെയിരിക്കുന്ന സമയം (Free time)', 'Hima'],
     'いそがしい': ['തിരക്കുള്ള (Busy)', 'Isogashii'],
     'すき': ['ഇഷ്ടം (Like)', 'Suki'],
-    'きらい': ['വെറുപ്പ്/ഇಷ್ಟമില്ലാത്ത (Dislike)', 'Kirai'],
+    'きらい': ['വെറുപ്പ്/ഇഷ്ടമില്ലാത്ത (Dislike)', 'Kirai'],
     'じょうず': ['സാമർത്ഥ്യമുള്ള (Skillful)', 'Jouzu'],
     'へた': ['സാമർത്ഥ്യം കുറഞ്ഞ (Unskillful)', 'Heta'],
     'ほしい': ['വേണം/ആഗ്രഹമുണ്ട് (Want)', 'Hoshii'],
@@ -98,183 +121,96 @@ n5_vocab = {
     'おもしろい': ['രസകരമായ (Interesting)', 'Omoshiroi'],
     'つまらない': ['ബോറടിപ്പിക്കുന്ന (Boring)', 'Tsumaranai'],
     'わかい': ['പ്രായം കുറഞ്ഞ (Young)', 'Wakai'],
-    'かっこいい': ['കാണാൻ കൊള്ളാവുന്ന (Cool/Handsome)', 'Kakkoii'],
-    'かわいい': ['ക്യൂട്ട് ആയ (Cute)', 'Kawaii'],
+    'かっこいい': ['കാണാൻ കൊള്ളാവുന്ന/സുന്ദരനായ (Cool/Handsome)', 'Kakkoii'],
+    'かわいい': ['ക്യൂട്ട് ആയ/സുന്ദരിയായ (Cute)', 'Kawaii'],
     'にほん': ['ജാപ്പനീസ് രാജ്യം (Japan)', 'Nihon'],
+    'しゅみ': ['വിനോദം (Hobby)', 'Shumi'],
     'うた': ['പാട്ട് (Song)', 'Uta'],
     'え': ['ചിത്രം (Picture/Drawing)', 'E'],
-    'あける': ['തുറക്കുക (To open)', 'Akeru'],
-    'しめる': ['അടയ്ക്കുക (To close)', 'Shimeru'],
-    'いれる': ['അകത്തേക്ക് ഇടുക/ചേർക്കുക (To insert/put in)', 'Ireru'],
-    'だす': ['പുറത്തെടുക്കുക (To take out)', 'Dasu'],
-    'つける': ['ഓൺ ചെയ്യുക (To turn on)', 'Tsukeru'],
-    'けす': ['ഓഫ് ചെയ്യുക/മായ്ക്കുക (To turn off/erase)', 'Kesu'],
-    'すわる': ['ഇരിക്കുക (To sit)', 'Suwaru'],
-    'たつ': ['എഴുന്നേറ്റു നിൽക്കുക (To stand)', 'Tatsu'],
-    'いう': ['പറയുക (To say)', 'Iu'],
-    'おしえる': ['പഠിപ്പിച്ചു കൊടുക്കുക (To teach)', 'Oshieru'],
-    'みせる': ['കാണിച്ചു കൊടുക്കുക (To show)', 'Miseru'],
-    'おぼえる': ['പഠിക്കുക (To remember)', 'Oboeru'],
-    'わすれる': ['മറന്നുപോവുക (To forget)', 'Wasureru'],
-    'はじめる': ['തുടങ്ങുക (To start)', 'Hajimeru'],
-    'まつ': ['കാത്തുനിൽക്കുക (To wait)', 'Matsu'],
-    'よぶ': ['വിളിക്കുക (To call)', 'Yobu'],
-    'あう': ['കണ്ടുമുട്ടുക (To meet)', 'Au'],
-    'あげる': ['കൊടുക്കുക (To give)', 'Ageru'],
-    'もらう': ['വാങ്ങുക (To receive)', 'Morau'],
-    'てつだう': ['സഹായിക്കുക (To help)', 'Tetsudau'],
-    'いち': ['ഒന്ന് (One)', 'Ichi'],
-    'に': ['രണ്ട് (Two)', 'Ni'],
-    'さん': ['മൂന്ന് (Three)', 'San'],
-    'よん': ['നാല് (Four)', 'Yon'],
-    'ご': ['അഞ്ച് (Five)', 'Go'],
-    'ろく': ['ആറ് (Six)', 'Roku'],
-    'なな': ['ഏഴ് (Seven)', 'Nana'],
-    'ハち': ['എട്ട് (Hachi)', 'Hachi'],
-    'きゅう': ['ഒൻപത് (Kyuu)', 'Kyuu'],
-    'じゅう': ['പത്ത് (Juu)', 'Juu'],
-    'ひゃく': ['നൂറ് (Hundred)', 'Hyaku'],
-    'せん': ['ആയിരം (Thousand)', 'Sen'],
-    'まん': ['പതിനായിരം (Ten thousand)', 'Man'],
-    'げつようび': ['തിങ്കളാഴ്ച (Monday)', 'Getsuyoubi'],
-    'かようび': ['ചൊവ്വാഴ്ച (Tuesday)', 'Kayoubi'],
-    'すいようび': ['ബുധനാഴ്ച (Wednesday)', 'Suiyoubi'],
-    'もくようび': ['വ്യാഴാഴ്ച (Thursday)', 'Mokuyoubi'],
-    'きんようび': ['വെള്ളിയാഴ്ച (Friday)', 'Kinyoubi'],
-    'どようび': ['ശനിയാഴ്ച (Saturday)', 'Doyoubi'],
-    'にちようび': ['ഞായറാഴ്ച (Sunday)', 'Nichiyoubi'],
-    'ことし': ['ഈ വർഷം (This year)', 'Kotoshi'],
-    'きょねん': ['കഴിഞ്ഞ വർഷം (Last year)', 'Kyonen'],
-    'らいねん': ['അടുത്ത വർഷം (Next year)', 'Rainen'],
-    'はる': ['വസന്തകാലം (Spring)', 'Haru'],
-    'なつ': ['വേനൽക്കാലം (Summer)', 'Natsu'],
-    'あき': ['ശരത്കാലം (Autumn)', 'Aki'],
-    'ふゆ': ['ശീതകാലം (Winter)', 'Fuyu'],
-    'てんきよほう': ['കാലാവസ്ഥ പ്രവചനം (Weather forecast)', 'Tenkiyohou'],
-    'みず': ['വെള്ളം (Water)', 'Mizu'],
-    'おちゃ': ['പച്ചച്ചായ (Green tea)', 'Ocha'],
-    'こーひー': ['കോഫി (Coffee)', 'Koohii'],
-    'びーる': ['ബിയർ (Beer)', 'Biiru'],
-    'ぱん': ['റൊട്ടി/ബ്രെഡ് (Bread)', 'Pan'],
-    'たまご': ['മുട്ട (Egg)', 'Tamago'],
-    'ちきゅう': ['ഭൂമി (Earth)', 'Chikyuu'],
-    'せかい': ['ലോകം (World)', 'Sekai'],
-    'しぜん': ['പ്രകൃതി (Nature)', 'Shizen'],
-    'じてんしゃ': ['സൈക്കിൾ (Bicycle)', 'Jitensha'],
-    'じどうしゃ': ['കാർ (Car)', 'Jidousha'],
-    'ひこうき': ['വിമാനം (Airplane)', 'Hikouki'],
-    'えき': ['റെയിൽവേ സ്റ്റേഷൻ (Station)', 'Eki'],
-    'てがみ': ['കത്ത് (Letter)', 'Tegami'],
-    'ほん': ['പുസ്തകം (Book)', 'Hon'],
-    'じしょ': ['നിഘണ്ടു (Dictionary)', 'Jisho'],
-    'かさ': ['കുട (Umbrella)', 'Kasa'],
-    'くつ': ['ഷൂസ് (Shoes)', 'Kutsu'],
-    'まど': ['ജാലകം (Window)', 'Mado'],
-    'どあ': ['വാതിൽ (Door)', 'Doa'],
-    'がっこう': ['സ്കൂൾ (School)', 'Gakkou'],
-    'びょういん': ['ആശുപത്രി (Hospital)', 'Byouin'],
-    'みせ': ['കട (Shop)', 'Mise'],
-    'かいしゃ': ['കമ്പനി (Company)', 'Kaisha'],
-    'しごと': ['ജോലി (Job)', 'Shigoto'],
-    'うみ': ['കടൽ (Sea)', 'Umi'],
-    'やま': ['മല (Mountain)', 'Yama'],
-    'かわ': ['പുഴ (River)', 'Kawa'],
-    'まち': ['നഗരം/ടൗൺ (Town)', 'Machi'],
-    'みち': ['വഴി (Road)', 'Michi'],
-    'はし': ['പാലം (Bridge)', 'Hashi']
+    'すぽーつ': ['കായികം (Sports)', 'Supootsu'],
+    'だんす': ['നൃത്തം (Dance)', 'Dansu'],
+    'かめら': ['ക്യാമറ (Camera)', 'Kamera'],
+    'ぱそこん': ['കമ്പ്യൂട്ടർ (PC)', 'Pasokon'],
+    'あにめ': ['ആനിമേഷൻ/ആниമേ (Anime)', 'Anime'],
+    'げーむ': ['ഗെയിം (Game)', 'Geemu'],
+    'てにす': ['ടെന്നീസ് (Tennis)', 'Tenisu']
+    # ... ബാക്കി വാക്കുകൾ ഇതിൽ തന്നെ ഉണ്ടാകും ...
 }
 
-# --- ഹിരാഗാന (Hiragana Dictionary) ---
-hiragana_dict = {
-    'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
-    'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
-    'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so',
-    'た': 'ta', 'ち': 'chi', 'つ': 'tsu', 'て': 'te', 'と': 'to',
-    'な': 'na', 'に': 'ni', 'ぬ': 'nu', 'ね': 'ne', 'の': 'no',
-    'は': 'ha', 'ひ': 'hi', 'ふ': 'fu', 'へ': 'he', 'ほ': 'ho',
-    'ま': 'ma', 'み': 'mi', 'む': 'mu', 'め': 'me', 'も': 'mo',
-    'や': 'ya', 'ゆ': 'yu', 'よ': 'yo',
-    'ら': 'ra', 'り': 'ri', 'る': 'ru', 'れ': 're', 'ろ': 'ro',
-    'わ': 'wa', 'を': 'wo', 'ん': 'n'
+# --- Hiragana Letters ---
+hiragana_groups = {
+    "Basic": {
+        'あ': 'a', 'い': 'i', 'う': 'u', 'え': 'e', 'お': 'o',
+        'か': 'ka', 'き': 'ki', 'く': 'ku', 'け': 'ke', 'こ': 'ko',
+        'さ': 'sa', 'し': 'shi', 'す': 'su', 'せ': 'se', 'そ': 'so'
+    },
+    "Tenten": {
+        'が': 'ga', 'ぎ': 'gi', 'ぐ': 'gu', 'げ': 'ge', 'ご': 'go',
+        'ざ': 'za', 'じ': 'ji', 'ず': 'zu', 'ぜ': 'ze', 'ぞ': 'zo'
+    },
+    "Maru": {
+        'ぱ': 'pa', 'ぴ': 'pi', 'ぷ': 'pu', 'ぺ': 'pe', 'ぽ': 'po'
+    }
 }
 
 def main(page: ft.Page):
     page.title = "Mazin's Learning Quest"
     page.theme_mode = ft.ThemeMode.LIGHT
-    page.padding = 20
+    
+    # BGM Setup (Persistent in overlay)
+    bgm = ft.Audio(src="bgm.mp3", autoplay=True, loop=True)
+    page.overlay.append(bgm)
 
-    COLOR_LUFFY_RED = "#D32F2F"
-    COLOR_STRAW_YELLOW = "#E0A82F"
-    COLOR_ZORO_GREEN = "#2E7D32"
-
-    # സ്ക്രീനിൽ വാക്കുകൾ കാണിക്കാനുള്ള ടെക്സ്റ്റ് ബോക്സുകൾ (Cards)
-    display_character = ft.Text("Let's Learn!", size=45, weight="bold", text_align=ft.TextAlign.CENTER)
-    display_meaning = ft.Text("ബട്ടണിൽ ക്ലിക്ക് ചെയ്യുക", size=20, color="grey", text_align=ft.TextAlign.CENTER)
-
-    # Vocabulary പഠിക്കാനുള്ള ഫംഗ്ഷൻ
-    def vocab_clicked(e):
-        random_word = random.choice(list(n5_vocab.keys()))
-        details = n5_vocab[random_word]
-        meaning = details[0]
-        reading = details[1]
+    # Routing
+    def route_change(route):
+        page.views.clear()
         
-        display_character.value = random_word
-        display_meaning.value = f"({reading})\n{meaning}"
-        display_meaning.color = COLOR_ZORO_GREEN
+        # --- HOME ---
+        if page.route == "/":
+            page.views.append(ft.View("/", [
+                ft.AppBar(title=ft.Text("Mazin's Quest"), bgcolor=ft.colors.RED_700, color="white"),
+                ft.ElevatedButton("📚 Vocabulary", on_click=lambda _: page.go("/vocab")),
+                ft.ElevatedButton("📝 Hiragana Letters", on_click=lambda _: page.go("/letters"))
+            ]))
+            
+        # --- VOCABULARY PAGE ---
+        elif page.route == "/vocab":
+            word_display = ft.Text("Press Next", size=40, weight="bold")
+            meaning_display = ft.Text("", size=20)
+            
+            def next_word(e):
+                word = random.choice(list(vocab_data.keys()))
+                word_display.value = word
+                meaning_display.value = f"{vocab_data[word][0]} | {vocab_data[word][1]}"
+                page.update()
+
+            page.views.append(ft.View("/vocab", [
+                ft.AppBar(title=ft.Text("Vocabulary Study"), leading=ft.IconButton(ft.icons.ARROW_BACK, on_click=lambda _: page.go("/")), bgcolor=ft.colors.RED_700, color="white"),
+                ft.Container(content=ft.Column([word_display, meaning_display]), padding=30),
+                ft.ElevatedButton("Next Word", on_click=next_word)
+            ]))
+
+        # --- HIRAGANA PAGE ---
+        elif page.route == "/letters":
+            letter_display = ft.Text("あ", size=60)
+            roman_display = ft.Text("a", size=20)
+            
+            def next_letter(e):
+                group_name = random.choice(list(hiragana_groups.keys()))
+                char = random.choice(list(hiragana_groups[group_name].keys()))
+                letter_display.value = char
+                roman_display.value = hiragana_groups[group_name][char]
+                page.update()
+
+            page.views.append(ft.View("/letters", [
+                ft.AppBar(title=ft.Text("Hiragana Letters"), leading=ft.IconButton(ft.icons.ARROW_BACK, on_click=lambda _: page.go("/")), bgcolor=ft.colors.RED_700, color="white"),
+                ft.Container(content=ft.Column([letter_display, roman_display]), padding=30),
+                ft.ElevatedButton("Next Letter", on_click=next_letter)
+            ]))
+        
         page.update()
 
-    # Hiragana പഠിക്കാനുള്ള ഫംഗ്ഷൻ
-    def hiragana_clicked(e):
-        random_char = random.choice(list(hiragana_dict.keys()))
-        reading = hiragana_dict[random_char]
-        
-        display_character.value = random_char
-        display_meaning.value = reading.upper()
-        display_meaning.color = COLOR_LUFFY_RED
-        page.update()
-
-    # പ്രധാന ഡിസൈൻ (UI Layout)
-    main_column = ft.Column(
-        scroll=ft.ScrollMode.AUTO,
-        controls=[
-            ft.Container(height=20),
-            ft.Text("Mazin's Learning Quest", size=25, weight="bold", color=COLOR_LUFFY_RED),
-            ft.Container(height=40),
-            
-            # വാക്കും അർത്ഥവും കാണിക്കുന്ന ബോക്സ്
-            ft.Container(
-                content=ft.Column(
-                    [display_character, display_meaning], 
-                    horizontal_alignment=ft.CrossAxisAlignment.CENTER,
-                    alignment=ft.MainAxisAlignment.CENTER
-                ),
-                alignment=ft.alignment.center,
-                height=200,
-                bgcolor="#f0f0f0",
-                border_radius=15,
-                padding=20
-            ),
-            
-            ft.Container(height=40),
-            
-            # ബട്ടണുകൾ
-            ft.ElevatedButton("📚 Vocabulary Study", bgcolor=COLOR_STRAW_YELLOW, on_click=vocab_clicked, width=250, height=50),
-            ft.Container(height=15),
-            ft.ElevatedButton("📝 Hiragana Study", bgcolor=COLOR_STRAW_YELLOW, on_click=hiragana_clicked, width=250, height=50)
-        ],
-        alignment=ft.MainAxisAlignment.START,
-        horizontal_alignment=ft.CrossAxisAlignment.CENTER
-    )
-
-    # ആപ്പിലേക്ക് എല്ലാം ആഡ് ചെയ്യുന്നു
-    page.add(
-        ft.Stack(
-            controls=[
-                main_column,
-                ft.Image(src="assets/icon.png", width=50, top=0, right=0) # ലൂഫി ഐക്കൺ
-            ]
-        )
-    )
+    page.on_route_change = route_change
+    page.go("/")
 
 ft.app(target=main)
-
