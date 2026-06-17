@@ -2,21 +2,21 @@ import flet as ft
 import random
 import urllib.parse
 
-# --- വൊക്കാബുലറി ഡാറ്റ (പഴയതും പുതിയ 100 വാക്കുകളും ഉൾപ്പെടുത്തിയത്) ---
+# --- വൊക്കാബുലറി ഡാറ്റ ---
 vocab_data = {
     "お母さん": ["അമ്മ (Mother)", "Mother", "Okaasan"],
     "お父さん": ["അച്ഛൻ (Father)", "Father", "Otousan"],
     "ありがとう": ["നന്ദി", "Thank you", "Arigatou"],
     "こんにちは": ["നമസ്കാരം (ഉച്ചയ്ക്ക്)", "Hello/Good afternoon", "Konnichiwa"],
     "おはよう": ["സുപ്രഭാതം", "Good morning", "Ohayou"],
-    "さようなら": ["விட", "Goodbye", "Sayounara"],
+    "さようなら": ["വിട", "Goodbye", "Sayounara"],
     "行く": ["പോകുക", "Go", "Iku"],
     "来る": ["വരുക", "Come", "Kuru"],
     "食べる": ["കഴിക്കുക", "Eat", "Taberu"],
     "飲む": ["കുടിക്കുക", "Drink", "Nomu"],
     "見る": ["കാണുക", "See/Watch", "Miru"],
     "聞く": ["കേൾക്കുക", "Listen/Ask", "Kiku"],
-    "読む": ["വായിക്കുക", "Read", "Yomu"],
+    "読む": ["വ่ายിക്കുക", "Read", "Yomu"],
     "書く": ["എഴുതുക", "Write", "Kaku"],
     "話す": ["സംസാരിക്കുക", "Speak", "Hanasu"],
     "買う": ["വാങ്ങുക", "Buy", "Kau"],
@@ -62,7 +62,7 @@ vocab_data = {
     "家": ["വീട്", "House", "Ie"],
     "部屋": ["മുറി", "Room", "Heya"],
     "窓": ["ജനൽ", "Window", "Mado"],
-    "ドア": ["വാതിൽ", "Door", "Doa"],
+    "ドア": ["വാтил", "Door", "Doa"],
     "机": ["മേശ", "Desk", "Tsukue"],
     "椅子": ["കസേര", "Chair", "Isu"],
     "お金": ["പണം", "Money", "Okane"],
@@ -83,7 +83,7 @@ vocab_data = {
     "春": ["വസന്തം", "Spring", "Haru"],
     "夏": ["വേനൽക്കാലം", "Summer", "Natsu"],
     "秋": ["ശരത്കാലം", "Autumn", "Aki"],
-    "冬": ["ശൈത്യകാലം", "Winter", "Fuyu"],
+    "冬": ["شൈത്യകാലം", "Winter", "Fuyu"],
     "天気": ["കാലാവസ്ഥ", "Weather", "Tenki"],
     "雨": ["മഴ", "Rain", "Ame"],
     "雪": ["മഞ്ഞ്", "Snow", "Yuki"],
@@ -108,7 +108,7 @@ vocab_data = {
 }
 
 hiragana_chars = ["あ","い","う","え","お","か","き","く","け","こ","さ","し","す","せ","そ","た","ち","つ","て","と","な","に","ぬ","ね","の","は","ひ","ふ","へ","ほ","ま","み","む","め","も","や","ゆ","よ","ら","り","る","れ","ろ","わ","を","ん"]
-katakana_chars = ["アイ","ウエ","オカ","キク","ケコ","サシ","スセ","ソタ","チツ","テト","ナニ","ヌネ","ノハ","ヒフ","ヘホ","マミ","ムメ","モヤ","ユヨ","ラリ","ルレ","ロワ","ヲン"]
+katakana_chars = ["ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ","サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト","ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ","マ","ミ","ム","メモ","ヤ","ユ","ヨ","ラ","リ","ル","レ","ロ","ワ","ヲ","ン"]
 
 kanji_n5 = {
     "一": "One (Ichi)", "二": "Two (Ni)", "三": "Three (San)", "四": "Four (Yon)", "五": "Five (Go)",
@@ -127,16 +127,18 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.padding = 20
 
-    # ഓഡിയോ എലമെന്റുകൾ
-    bgm = ft.Audio(src="bgm.mp3", autoplay=True, loop=True)
+    # വോയ്‌സ് ഓഡിയോ എലമെന്റ് മാത്രം നിലനിർത്തി (ക്രാഷ് ഒഴിവാക്കാൻ BGM താൽക്കാലികമായി മാറ്റി)
     voice_audio = ft.Audio(autoplay=False)
-    page.overlay.extend([bgm, voice_audio])
+    page.overlay.append(voice_audio)
 
     def play_voice(word):
-        encoded_word = urllib.parse.quote(word)
-        voice_audio.src = f"https://translate.google.com/translate_tts?ie=UTF-8&q={encoded_word}&tl=ja&client=tw-ob"
-        page.update()
-        voice_audio.play()
+        try:
+            encoded_word = urllib.parse.quote(word)
+            voice_audio.src = f"https://translate.google.com/translate_tts?ie=UTF-8&q={encoded_word}&tl=ja&client=tw-ob"
+            page.update()
+            voice_audio.play()
+        except:
+            pass
 
     def route_change(e):
         page.views.clear()
@@ -364,12 +366,7 @@ def main(page: ft.Page):
         page.update()
 
     page.on_route_change = route_change
-    # ആപ്പ് ആദ്യം ലോഡ് ചെയ്യുമ്പോൾ ഹോം പേജിലേക്ക് പോകാൻ
-    if page.route == "" or page.route == "/":
-        page.go("/")
-    else:
-        page.go(page.route)
+    page.go("/")
 
-ft.app(target=main, assets_dir="assets")
-
-            
+ft.app(target=main)
+           
