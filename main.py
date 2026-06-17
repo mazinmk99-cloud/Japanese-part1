@@ -1,8 +1,7 @@
 import flet as ft
 import random
-import urllib.parse
 
-# --- വൊക്കാബുലറി ഡാറ്റ ---
+# --- വൊക്കാബുലറി ഡാറ്റ (100 വാക്കുകൾ) ---
 vocab_data = {
     "お母さん": ["അമ്മ (Mother)", "Mother", "Okaasan"],
     "お父さん": ["അച്ഛൻ (Father)", "Father", "Otousan"],
@@ -16,7 +15,7 @@ vocab_data = {
     "飲む": ["കുടിക്കുക", "Drink", "Nomu"],
     "見る": ["കാണുക", "See/Watch", "Miru"],
     "聞く": ["കേൾക്കുക", "Listen/Ask", "Kiku"],
-    "読む": ["വ่ายിക്കുക", "Read", "Yomu"],
+    "読む": ["വായിക്കുക", "Read", "Yomu"],
     "書く": ["എഴുതുക", "Write", "Kaku"],
     "話す": ["സംസാരിക്കുക", "Speak", "Hanasu"],
     "買う": ["വാങ്ങുക", "Buy", "Kau"],
@@ -50,7 +49,7 @@ vocab_data = {
     "飛行機": ["വിമാനം", "Airplane", "Hikouki"],
     "駅": ["സ്റ്റേഷൻ", "Station", "Eki"],
     "学校": ["സ്കൂൾ", "School", "Gakkou"],
-    "先生": ["അധ്യാപകൻ", "Teacher", "Sensei"],
+    "先生": ["അধ്യാപകൻ", "Teacher", "Sensei"],
     "学生": ["വിദ്യാർത്ഥി", "Student", "Gakusei"],
     "犬": ["നായ", "Dog", "Inu"],
     "猫": ["പൂച്ച", "Cat", "Neko"],
@@ -62,7 +61,7 @@ vocab_data = {
     "家": ["വീട്", "House", "Ie"],
     "部屋": ["മുറി", "Room", "Heya"],
     "窓": ["ജനൽ", "Window", "Mado"],
-    "ドア": ["വാтил", "Door", "Doa"],
+    "ドア": ["വാതിൽ", "Door", "Doa"],
     "机": ["മേശ", "Desk", "Tsukue"],
     "椅子": ["കസേര", "Chair", "Isu"],
     "お金": ["പണം", "Money", "Okane"],
@@ -83,7 +82,7 @@ vocab_data = {
     "春": ["വസന്തം", "Spring", "Haru"],
     "夏": ["വേനൽക്കാലം", "Summer", "Natsu"],
     "秋": ["ശരത്കാലം", "Autumn", "Aki"],
-    "冬": ["شൈത്യകാലം", "Winter", "Fuyu"],
+    "冬": ["ശൈത്യകാലം", "Winter", "Fuyu"],
     "天気": ["കാലാവസ്ഥ", "Weather", "Tenki"],
     "雨": ["മഴ", "Rain", "Ame"],
     "雪": ["മഞ്ഞ്", "Snow", "Yuki"],
@@ -127,19 +126,6 @@ def main(page: ft.Page):
     page.theme_mode = ft.ThemeMode.DARK
     page.padding = 20
 
-    # വോയ്‌സ് ഓഡിയോ എലമെന്റ് മാത്രം നിലനിർത്തി (ക്രാഷ് ഒഴിവാക്കാൻ BGM താൽക്കാലികമായി മാറ്റി)
-    voice_audio = ft.Audio(autoplay=False)
-    page.overlay.append(voice_audio)
-
-    def play_voice(word):
-        try:
-            encoded_word = urllib.parse.quote(word)
-            voice_audio.src = f"https://translate.google.com/translate_tts?ie=UTF-8&q={encoded_word}&tl=ja&client=tw-ob"
-            page.update()
-            voice_audio.play()
-        except:
-            pass
-
     def route_change(e):
         page.views.clear()
         
@@ -151,7 +137,7 @@ def main(page: ft.Page):
                     [
                         ft.AppBar(title=ft.Text("Muzan"), bgcolor=ft.colors.RED_900, automatically_imply_leading=False),
                         ft.Column([
-                            ft.ElevatedButton("Vocabulary & Voice", on_click=lambda _: page.go("/vocab"), width=300),
+                            ft.ElevatedButton("Vocabulary Study", on_click=lambda _: page.go("/vocab"), width=300),
                             ft.ElevatedButton("Hiragana Letters", on_click=lambda _: page.go("/hiragana"), width=300),
                             ft.ElevatedButton("Katakana Letters", on_click=lambda _: page.go("/katakana"), width=300),
                             ft.ElevatedButton("N5 Kanji", on_click=lambda _: page.go("/kanji"), width=300),
@@ -184,10 +170,7 @@ def main(page: ft.Page):
                         ft.Column([
                             word_txt,
                             meaning_txt,
-                            ft.Row([
-                                ft.ElevatedButton("Play Voice", icon=ft.icons.VOLUME_UP, on_click=lambda _: play_voice(word_txt.value)),
-                                ft.ElevatedButton("Next Word", on_click=next_vocab)
-                            ], alignment=ft.MainAxisAlignment.CENTER),
+                            ft.ElevatedButton("Next Word", on_click=next_vocab),
                             ft.ElevatedButton("Back to Home", on_click=lambda _: page.go("/"), bgcolor=ft.colors.BLUE_GREY_900)
                         ], alignment=ft.MainAxisAlignment.CENTER, horizontal_alignment=ft.CrossAxisAlignment.CENTER, expand=True)
                     ]
